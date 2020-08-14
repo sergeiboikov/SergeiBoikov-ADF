@@ -1,0 +1,27 @@
+{
+	"name": "covid-sb-IR-2020-08-14T12-57-27Z",
+	"properties": {
+		"type": "Managed",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "West Europe",
+				"nodeSize": "Standard_D8_v3",
+				"numberOfNodes": 1,
+				"maxParallelExecutionsPerNode": 1
+			},
+			"ssisProperties": {
+				"catalogInfo": {
+					"catalogServerEndpoint": "covid-sb.database.windows.net",
+					"catalogAdminUserName": "azureadmin",
+					"catalogAdminPassword": {
+						"type": "SecureString",
+						"value": "**********"
+					},
+					"catalogPricingTier": "S1"
+				},
+				"edition": "Standard",
+				"licenseType": "BasePrice"
+			}
+		}
+	}
+}
