@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "covid-sb-df"
+		},
+		"AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://covidsbstac2.dfs.core.windows.net"
+		},
+		"AzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://covid-sb-kv.vault.azure.net/"
+		},
+		"CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "covid-sb.database.windows.net"
+		},
+		"CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "azureadmin"
+		},
+		"CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		},
+		"covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "covid-sb.database.windows.net"
+		},
+		"covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "azureadmin"
+		},
+		"covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
