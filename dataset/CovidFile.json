@@ -11,6 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "CoordStatusMA_Short.csv",
+				"folderPath": "input",
 				"fileSystem": "covidsbcontainer"
 			},
 			"columnDelimiter": ",",
