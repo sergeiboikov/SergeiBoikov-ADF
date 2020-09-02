@@ -1,6 +1,7 @@
 {
 	"name": "AzureDatabricks",
 	"properties": {
+		"description": "covid-sb databricks cluster",
 		"annotations": [],
 		"type": "AzureDatabricks",
 		"typeProperties": {
@@ -14,7 +15,6 @@
 				"secretName": "databricks-sas"
 			},
 			"existingClusterId": "0819-084227-spade10"
-		},
-		"description": "covid-sb databricks cluster"
+		}
 	}
 }
