@@ -15,6 +15,12 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [
+					{
+						"name": "fileName",
+						"value": "@pipeline().parameters.fileName"
+					}
+				],
 				"typeProperties": {
 					"notebookPath": "/Shared/TransformCovidFile",
 					"baseParameters": {
