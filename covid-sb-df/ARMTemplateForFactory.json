@@ -76,7 +76,7 @@
 							}
 						],
 						"typeProperties": {
-							"notebookPath": "/Shared/TransformCovidFile",
+							"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFile",
 							"baseParameters": {
 								"fileName": {
 									"value": "@pipeline().parameters.fileName",
