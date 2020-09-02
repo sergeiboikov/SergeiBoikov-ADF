@@ -1,6 +1,7 @@
 {
-	"name": "CovidFileFormatted",
+	"name": "PreparedCovidFile",
 	"properties": {
+		"description": "Prepared file for staging",
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage",
 			"type": "LinkedServiceReference"
@@ -10,7 +11,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "CoordStatusMA_Short_Formatted.csv",
+				"fileName": "*_prepared.csv",
 				"folderPath": "output",
 				"fileSystem": "covidsbcontainer"
 			},
