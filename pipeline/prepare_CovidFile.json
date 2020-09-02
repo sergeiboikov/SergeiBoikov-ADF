@@ -1,0 +1,7 @@
+{
+	"name": "prepare_CovidFile",
+	"properties": {
+		"description": "Prepare Covid file for staging",
+		"annotations": []
+	}
+}
