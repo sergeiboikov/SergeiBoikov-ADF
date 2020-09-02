@@ -8,6 +8,9 @@
 		"AzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
+		"AzureSqlDatabase_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://covidsbstac2.dfs.core.windows.net"
 		},
