@@ -1,5 +1,5 @@
 {
-	"name": "CovidFile",
+	"name": "InputCovidFile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage",
