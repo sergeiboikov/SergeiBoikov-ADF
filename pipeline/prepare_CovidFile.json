@@ -2,6 +2,34 @@
 	"name": "prepare_CovidFile",
 	"properties": {
 		"description": "Prepare Covid file for staging",
+		"activities": [
+			{
+				"name": "prepare_covid_file_task",
+				"description": "Notebook activity for preparation covid file for staging",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"notebookPath": "/Shared/TransformCovidFile"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"fileName": {
+				"type": "string",
+				"defaultValue": "CoordStatusMA_Short.csv"
+			}
+		},
 		"annotations": []
 	}
 }
