@@ -1640,7 +1640,7 @@
 					"newClusterSparkEnvVars": {
 						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
 					},
-					"newClusterVersion": "3.0.0"
+					"newClusterVersion": "spark 3.0.0"
 				}
 			},
 			"dependsOn": [
