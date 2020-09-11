@@ -14,7 +14,12 @@
 				},
 				"secretName": "databricks-sas"
 			},
-			"existingClusterId": "0819-084227-spade10"
+			"newClusterNodeType": "Standard_F4s",
+			"newClusterNumOfWorker": "1",
+			"newClusterSparkEnvVars": {
+				"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+			},
+			"newClusterVersion": "3.0.0, Scala 2.12"
 		}
 	}
 }
