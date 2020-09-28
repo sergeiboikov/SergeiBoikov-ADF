@@ -76,7 +76,7 @@
 							}
 						],
 						"typeProperties": {
-							"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFile",
+							"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
 							"baseParameters": {
 								"fileName": {
 									"value": "@pipeline().parameters.fileName",
