@@ -125,6 +125,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": "CoordStatusMA_Short_prepared.csv",
 						"folderPath": "output",
 						"fileSystem": "covidsbcontainer"
 					},
@@ -1778,9 +1779,7 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFolderPath": "output",
-									"wildcardFileName": "*_prepared.csv"
+									"recursive": true
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
