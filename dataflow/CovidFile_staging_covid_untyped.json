@@ -1,7 +1,7 @@
 {
-	"name": "staging_Load_Covid_untyped",
+	"name": "CovidFile_staging_covid_untyped",
 	"properties": {
-		"description": "Load untyped data into staging",
+		"description": "Load untyped data from file into staging",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
