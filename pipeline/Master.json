@@ -8,6 +8,7 @@
 				"description": "Execute prepare_CovidFile pipeline",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "prepare_CovidFile",
