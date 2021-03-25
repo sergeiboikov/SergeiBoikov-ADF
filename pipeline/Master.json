@@ -1,0 +1,7 @@
+{
+	"name": "Master",
+	"properties": {
+		"description": "Master pipeline for covid project",
+		"annotations": []
+	}
+}
