@@ -2,6 +2,22 @@
 	"name": "Master",
 	"properties": {
 		"description": "Master pipeline for covid project",
+		"activities": [
+			{
+				"name": "Execute prepare_CovidFile",
+				"description": "Execute prepare_CovidFile pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "prepare_CovidFile",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
 		"annotations": []
 	}
 }
