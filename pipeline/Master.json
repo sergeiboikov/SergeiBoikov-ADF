@@ -8,13 +8,18 @@
 				"description": "Execute prepare_CovidFile pipeline",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
-				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "prepare_CovidFile",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"fileName": {
+							"value": "@pipeline().parameters.FileName",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -39,6 +44,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"FileName": {
+				"type": "string",
+				"defaultValue": "CoordStatusMA.csv"
+			}
+		},
 		"annotations": []
 	}
 }
