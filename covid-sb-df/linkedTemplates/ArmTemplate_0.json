@@ -515,7 +515,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"fileName": {
+									"value": "@pipeline().parameters.FileName",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -541,6 +546,12 @@
 						}
 					}
 				],
+				"parameters": {
+					"FileName": {
+						"type": "string",
+						"defaultValue": "CoordStatusMA.csv"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
