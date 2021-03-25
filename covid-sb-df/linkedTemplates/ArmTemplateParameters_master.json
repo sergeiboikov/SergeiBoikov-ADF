@@ -8,6 +8,9 @@
 		"AzureDataLakeStorage_servicePrincipalCredential": {
 			"value": ""
 		},
+		"AzureDatabricks_accessToken": {
+			"value": ""
+		},
 		"AzureSqlDatabase_connectionString": {
 			"value": ""
 		},
