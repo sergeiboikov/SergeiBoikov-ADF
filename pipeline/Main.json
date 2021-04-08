@@ -1,7 +1,7 @@
 {
-	"name": "Master",
+	"name": "Main",
 	"properties": {
-		"description": "Master pipeline for covid project",
+		"description": "Main pipeline for covid project",
 		"activities": [
 			{
 				"name": "Execute prepare_CovidFile",
