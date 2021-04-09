@@ -2,7 +2,7 @@
 	"name": "AzureDatabricks",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"description": "covid-sb databricks cluster",
+		"description": "covid-sb databricks cluster1",
 		"annotations": [],
 		"type": "AzureDatabricks",
 		"typeProperties": {
