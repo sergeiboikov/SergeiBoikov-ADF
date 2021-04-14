@@ -6,6 +6,12 @@
 			"referenceName": "AzureDataLakeStorage",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"FileName_prepared": {
+				"type": "string",
+				"defaultValue": "CoordStatusMA_Short_prepared.csv"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
