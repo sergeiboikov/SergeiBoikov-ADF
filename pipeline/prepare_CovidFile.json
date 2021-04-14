@@ -34,6 +34,27 @@
 					"referenceName": "AzureDatabricks",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Set FileName_prepared",
+				"description": "Set FileName_prepared from Databricks notebook",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "prepare_covid_file_task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "fileName_prepared",
+					"value": {
+						"value": "@activity('prepare_covid_file_task').output.runOutput",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
