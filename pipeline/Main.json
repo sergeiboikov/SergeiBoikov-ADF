@@ -48,7 +48,7 @@
 		"parameters": {
 			"FileName": {
 				"type": "string",
-				"defaultValue": "CoordStatusMA2.csv"
+				"defaultValue": "CoordStatusMA_Short.csv"
 			}
 		},
 		"annotations": []
