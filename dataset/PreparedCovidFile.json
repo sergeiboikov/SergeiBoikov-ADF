@@ -17,7 +17,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "CoordStatusMA_Short_prepared.csv",
+				"fileName": {
+					"value": "@dataset().FileName_prepared",
+					"type": "Expression"
+				},
 				"folderPath": "output",
 				"fileSystem": "covidsbcontainer"
 			},
