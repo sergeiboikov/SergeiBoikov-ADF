@@ -121,6 +121,11 @@
 				]
 			}
 		],
+		"parameters": {
+			"FileName_prepared": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
