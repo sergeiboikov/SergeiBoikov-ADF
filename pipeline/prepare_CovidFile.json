@@ -5,7 +5,7 @@
 		"activities": [
 			{
 				"name": "prepare_covid_file_task",
-				"description": "Notebook activity for preparation covid file for stagin",
+				"description": "Notebook activity for preparation covid file for staging",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
