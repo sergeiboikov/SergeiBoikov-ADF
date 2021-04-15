@@ -17,7 +17,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"fileName": {
-							"value": "@pipeline().parameters.FileName",
+							"value": "@pipeline().parameters.FileName_input",
 							"type": "Expression"
 						}
 					}
