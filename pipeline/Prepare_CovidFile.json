@@ -1,5 +1,5 @@
 {
-	"name": "prepare_CovidFile",
+	"name": "Prepare_CovidFile",
 	"properties": {
 		"description": "Prepare Covid file for staging",
 		"activities": [
