@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVault_LS",
+	"properties": {
+		"description": "Linked Service to Azure Key Vault",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://covid-sb-kv.vault.azure.net/"
+		}
+	}
+}
