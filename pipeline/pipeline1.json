@@ -10,7 +10,7 @@
 				"typeProperties": {
 					"variableName": "FileName_input",
 					"value": {
-						"value": "@concat(substring('CoordStatusMA_Short.csv', 0, lastindexof('CoordStatusMA_Short.csv', '.csv')), \n'_',formatDateTime(utcnow(), 'yyyy_mm_dd'), '_prepared.csv')\n",
+						"value": "@concat(substring('CoordStatusMA_Short.csv', 0, lastindexof('CoordStatusMA_Short.csv', '.csv')), \n'_',formatDateTime(utcnow(), 'yyyy_MM_dd'), '_prepared.csv')\n",
 						"type": "Expression"
 					}
 				}
