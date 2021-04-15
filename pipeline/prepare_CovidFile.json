@@ -24,22 +24,21 @@
 				"typeProperties": {
 					"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
 					"baseParameters": {
-						"fileName": {
-							"value": "@pipeline().parameters.fileName",
+						"FileName_input": {
+							"value": "@pipeline().parameters.FileName_input",
 							"type": "Expression"
 						}
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "AzureDatabricks",
+					"referenceName": "AzureDatabricks_LS",
 					"type": "LinkedServiceReference"
 				}
 			}
 		],
 		"parameters": {
-			"fileName": {
-				"type": "string",
-				"defaultValue": "CoordStatusMA_Short.csv"
+			"FileName_input": {
+				"type": "string"
 			}
 		},
 		"annotations": []

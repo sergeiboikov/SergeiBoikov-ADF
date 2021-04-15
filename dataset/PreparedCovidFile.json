@@ -3,15 +3,23 @@
 	"properties": {
 		"description": "Prepared file for staging",
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorage",
+			"referenceName": "AzureDataLakeStorage_LS",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName_prepared": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "CoordStatusMA_Short_prepared.csv",
+				"fileName": {
+					"value": "@dataset().FileName_prepared",
+					"type": "Expression"
+				},
 				"folderPath": "output",
 				"fileSystem": "covidsbcontainer"
 			},

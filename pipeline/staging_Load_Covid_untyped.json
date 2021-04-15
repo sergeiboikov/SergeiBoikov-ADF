@@ -107,7 +107,13 @@
 				"inputs": [
 					{
 						"referenceName": "PreparedCovidFile",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName_prepared": {
+								"value": "@pipeline().parameters.FileName_prepared",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -118,6 +124,11 @@
 				]
 			}
 		],
+		"parameters": {
+			"FileName_prepared": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

@@ -1,0 +1,11 @@
+{
+	"name": "AzureDataLakeStorage_LS",
+	"properties": {
+		"description": "Linked Service for Azure Data Lake Storage Gen2",
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://covidsbstac2.dfs.core.windows.net"
+		}
+	}
+}
