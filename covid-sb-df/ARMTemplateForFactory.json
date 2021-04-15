@@ -57,17 +57,28 @@
 						"name": "Execute prepare_CovidFile",
 						"description": "Execute prepare_CovidFile pipeline",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Set FileName_output",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "prepare_CovidFile",
+								"referenceName": "Prepare_CovidFile",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
 							"parameters": {
 								"FileName_input": {
 									"value": "@pipeline().parameters.FileName_input",
+									"type": "Expression"
+								},
+								"FileName_output": {
+									"value": "@variables('FileName_output')",
 									"type": "Expression"
 								}
 							}
@@ -88,15 +99,29 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "staging_Load_Covid_untyped",
+								"referenceName": "Load_staging_Covid_untyped",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
 							"parameters": {
 								"FileName_prepared": {
-									"value": "@activity('Execute prepare_CovidFile').output.runOutput",
+									"value": "@variables('FileName_output')",
 									"type": "Expression"
 								}
+							}
+						}
+					},
+					{
+						"name": "Set FileName_output",
+						"description": "Set FileName_output variable based on FileName_input parameter",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "FileName_output",
+							"value": {
+								"value": "@concat(substring(pipeline().parameters.FileName_input, 0, lastindexof(pipeline().parameters.FileName_input, '.csv')), \n'_',formatDateTime(utcnow(), 'yyyy_MM_dd'), '_prepared.csv')",
+								"type": "Expression"
 							}
 						}
 					}
@@ -107,18 +132,24 @@
 						"defaultValue": "CoordStatusMA_Short.csv"
 					}
 				},
+				"variables": {
+					"FileName_output": {
+						"type": "String"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/prepare_CovidFile')]",
-				"[concat(variables('factoryId'), '/pipelines/staging_Load_Covid_untyped')]"
+				"[concat(variables('factoryId'), '/pipelines/Prepare_CovidFile')]",
+				"[concat(variables('factoryId'), '/pipelines/Load_staging_Covid_untyped')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/staging_Load_Covid_untyped')]",
+			"name": "[concat(parameters('factoryName'), '/Load_staging_Covid_untyped')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"description": "Load data from prepared file into Azure SQL",
 				"activities": [
 					{
 						"name": "copy_prepared_file_staging_untyped",
@@ -507,7 +538,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/prepare_CovidFile')]",
+			"name": "[concat(parameters('factoryName'), '/Prepare_CovidFile')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -532,6 +563,10 @@
 								"FileName_input": {
 									"value": "@pipeline().parameters.FileName_input",
 									"type": "Expression"
+								},
+								"FileName_output": {
+									"value": "@pipeline().parameters.FileName_output",
+									"type": "Expression"
 								}
 							}
 						},
@@ -543,6 +578,9 @@
 				],
 				"parameters": {
 					"FileName_input": {
+						"type": "string"
+					},
+					"FileName_output": {
 						"type": "string"
 					}
 				},

@@ -1,0 +1,303 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "covid-sb-df"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Main')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Main pipeline for covid project",
+				"activities": [
+					{
+						"name": "Execute prepare_CovidFile",
+						"description": "Execute prepare_CovidFile pipeline",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Set FileName_output",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Prepare_CovidFile",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FileName_input": {
+									"value": "@pipeline().parameters.FileName_input",
+									"type": "Expression"
+								},
+								"FileName_output": {
+									"value": "@variables('FileName_output')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "Execute staging_Covid_untyped",
+						"description": "Execute staging_Covid_untyped pipeline",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Execute prepare_CovidFile",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Load_staging_Covid_untyped",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FileName_prepared": {
+									"value": "@variables('FileName_output')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "Set FileName_output",
+						"description": "Set FileName_output variable based on FileName_input parameter",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "FileName_output",
+							"value": {
+								"value": "@concat(substring(pipeline().parameters.FileName_input, 0, lastindexof(pipeline().parameters.FileName_input, '.csv')), \n'_',formatDateTime(utcnow(), 'yyyy_MM_dd'), '_prepared.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"parameters": {
+					"FileName_input": {
+						"type": "string",
+						"defaultValue": "CoordStatusMA_Short.csv"
+					}
+				},
+				"variables": {
+					"FileName_output": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Prepare_CovidFile')]",
+				"[concat(variables('factoryId'), '/pipelines/Load_staging_Covid_untyped')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_staging_Covid_untyped')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Load data from prepared file into Azure SQL",
+				"activities": [
+					{
+						"name": "copy_prepared_file_staging_untyped",
+						"description": "Copy prepared CovidFile from DataLake into staging ",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE staging.Covid_untyped",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"dataIntegrationUnits": 2,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Status",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Status",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Latitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Latitude",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Longitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Longitude",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Count",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Count",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PreparedCovidFile",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName_prepared": {
+										"value": "@pipeline().parameters.FileName_prepared",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "staging_Covid_untyped",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"parameters": {
+					"FileName_prepared": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Prepare_CovidFile')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Prepare Covid file for staging",
+				"activities": [
+					{
+						"name": "prepare_covid_file_task",
+						"description": "Notebook activity for preparation covid file for staging",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
+							"baseParameters": {
+								"FileName_input": {
+									"value": "@pipeline().parameters.FileName_input",
+									"type": "Expression"
+								},
+								"FileName_output": {
+									"value": "@pipeline().parameters.FileName_output",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_LS",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"parameters": {
+					"FileName_input": {
+						"type": "string"
+					},
+					"FileName_output": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}
