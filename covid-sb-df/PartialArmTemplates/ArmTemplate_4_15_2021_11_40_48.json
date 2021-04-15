@@ -6,40 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "covid-sb-df"
-		},
-		"AzureSqlDatabase_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
-		},
-		"AzureDataLakeStorage_LS_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://covidsbstac2.dfs.core.windows.net"
-		},
-		"AzureKeyVault_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://covid-sb-kv.vault.azure.net/"
-		},
-		"CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
-			"type": "string",
-			"defaultValue": "covid-sb.database.windows.net"
-		},
-		"CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
-			"type": "string",
-			"defaultValue": "azureadmin"
-		},
-		"CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
-			"type": "secureString"
-		},
-		"covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
-			"type": "string",
-			"defaultValue": "covid-sb.database.windows.net"
-		},
-		"covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
-			"type": "string",
-			"defaultValue": "azureadmin"
-		},
-		"covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
-			"type": "secureString"
 		}
 	},
 	"variables": {
@@ -64,8 +30,7 @@
 								"referenceName": "prepare_CovidFile",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -232,8 +197,7 @@
 						"outputs": [
 							{
 								"referenceName": "staging_Covid_untyped",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -246,8 +210,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/PreparedCovidFile')]",
-				"[concat(variables('factoryId'), '/datasets/staging_Covid_untyped')]"
+				"[concat(variables('factoryId'), '/datasets/PreparedCovidFile')]"
 			]
 		},
 		{
@@ -310,70 +273,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/staging_Covid_untyped')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Status",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Latitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Longitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Count",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sysCreatedAt",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "sysChangedAt",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "sysCreatedBy",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "sysChangedBy",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "staging",
-					"table": "Covid_untyped"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage_LS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -382,7 +281,7 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage_LS_properties_typeProperties_url')]"
+					"url": "https://covidsbstac2.dfs.core.windows.net"
 				}
 			},
 			"dependsOn": []
@@ -400,103 +299,6 @@
 					"authentication": "MSI",
 					"workspaceResourceId": "/subscriptions/40f083ce-f68e-476b-af9b-60ac84e7a6fc/resourceGroups/covid-sb-rg/providers/Microsoft.Databricks/workspaces/covid-sb-databricks-service",
 					"existingClusterId": "0325-062347-pegs613"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabase_connectionString')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "AzureKeyVault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "password"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CovidIntegrationRuntime')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "Managed",
-				"description": "Covid integration runtime",
-				"typeProperties": {
-					"computeProperties": {
-						"location": "West Europe",
-						"nodeSize": "Standard_D1_v2",
-						"numberOfNodes": 1,
-						"maxParallelExecutionsPerNode": 1
-					},
-					"ssisProperties": {
-						"catalogInfo": {
-							"catalogServerEndpoint": "[parameters('CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]",
-							"catalogAdminUserName": "[parameters('CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]",
-							"catalogAdminPassword": {
-								"type": "SecureString",
-								"value": "[parameters('CovidIntegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
-							},
-							"catalogPricingTier": "S1"
-						},
-						"edition": "Standard",
-						"licenseType": "LicenseIncluded"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/covid-sb-IR-2020-08-14T12-57-27Z')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "Managed",
-				"typeProperties": {
-					"computeProperties": {
-						"location": "West Europe",
-						"nodeSize": "Standard_D8_v3",
-						"numberOfNodes": 1,
-						"maxParallelExecutionsPerNode": 1
-					},
-					"ssisProperties": {
-						"catalogInfo": {
-							"catalogServerEndpoint": "[parameters('covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]",
-							"catalogAdminUserName": "[parameters('covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]",
-							"catalogAdminPassword": {
-								"type": "SecureString",
-								"value": "[parameters('covid-sb-IR-2020-08-14T12-57-27Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
-							},
-							"catalogPricingTier": "S1"
-						},
-						"edition": "Standard",
-						"licenseType": "BasePrice"
-					}
 				}
 			},
 			"dependsOn": []

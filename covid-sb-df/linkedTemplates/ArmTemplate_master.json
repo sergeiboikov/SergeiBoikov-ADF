@@ -7,29 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "covid-sb-df"
 		},
-		"AzureDataLakeStorage_servicePrincipalCredential": {
-			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalCredential' of 'AzureDataLakeStorage'"
-		},
-		"AzureDatabricks_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
-		},
 		"AzureSqlDatabase_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
 		},
-		"AzureDataLakeStorage_properties_typeProperties_url": {
+		"AzureDataLakeStorage_LS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://covidsbstac2.dfs.core.windows.net"
-		},
-		"AzureDataLakeStorage_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
-		},
-		"AzureDataLakeStorage_properties_typeProperties_servicePrincipalId": {
-			"type": "string",
-			"defaultValue": "05b0a1db-8ab9-4352-803a-94b3e82d3edc"
 		},
 		"AzureKeyVault_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -84,23 +68,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureDataLakeStorage_servicePrincipalCredential": {
-						"value": "[parameters('AzureDataLakeStorage_servicePrincipalCredential')]"
-					},
-					"AzureDatabricks_accessToken": {
-						"value": "[parameters('AzureDatabricks_accessToken')]"
-					},
 					"AzureSqlDatabase_connectionString": {
 						"value": "[parameters('AzureSqlDatabase_connectionString')]"
 					},
-					"AzureDataLakeStorage_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
-					},
-					"AzureDataLakeStorage_properties_typeProperties_tenant": {
-						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_tenant')]"
-					},
-					"AzureDataLakeStorage_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_servicePrincipalId')]"
+					"AzureDataLakeStorage_LS_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_LS_properties_typeProperties_url')]"
 					},
 					"AzureKeyVault_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault_properties_typeProperties_baseUrl')]"
