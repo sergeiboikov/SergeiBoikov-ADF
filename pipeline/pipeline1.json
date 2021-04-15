@@ -1,0 +1,27 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FileName_input",
+					"value": {
+						"value": "substring('CoordStatusMA_Short.csv',0, lastindexof(@pipeline().parameters.FileName_input, '.csv'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"FileName_input": {
+				"type": "String",
+				"defaultValue": "CoordStatusMA_Short.csv"
+			}
+		},
+		"annotations": []
+	}
+}
