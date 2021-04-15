@@ -8,8 +8,7 @@
 		},
 		"parameters": {
 			"FileName_prepared": {
-				"type": "string",
-				"defaultValue": "CoordStatusMA_Short_prepared.csv"
+				"type": "string"
 			}
 		},
 		"annotations": [],
