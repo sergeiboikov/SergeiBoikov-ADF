@@ -22,6 +22,10 @@
 						"FileName_input": {
 							"value": "@pipeline().parameters.FileName_input",
 							"type": "Expression"
+						},
+						"FileName_output": {
+							"value": "@pipeline().parameters.FileName_output",
+							"type": "Expression"
 						}
 					}
 				},
@@ -33,6 +37,9 @@
 		],
 		"parameters": {
 			"FileName_input": {
+				"type": "string"
+			},
+			"FileName_output": {
 				"type": "string"
 			}
 		},
