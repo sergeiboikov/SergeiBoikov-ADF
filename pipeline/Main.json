@@ -45,7 +45,13 @@
 						"referenceName": "staging_Load_Covid_untyped",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"FileName_prepared": {
+							"value": "@activity('Execute prepare_CovidFile').output",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
