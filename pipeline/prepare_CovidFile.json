@@ -19,10 +19,6 @@
 					{
 						"name": "fileName",
 						"value": "@pipeline().parameters.fileName"
-					},
-					{
-						"name": "FileName_output",
-						"value": "@pipeline().parameters.FileName_output"
 					}
 				],
 				"typeProperties": {
