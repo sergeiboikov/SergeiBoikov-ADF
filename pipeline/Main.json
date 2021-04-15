@@ -7,7 +7,14 @@
 				"name": "Execute prepare_CovidFile",
 				"description": "Execute prepare_CovidFile pipeline",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set FileName_output",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -19,6 +26,10 @@
 						"FileName_input": {
 							"value": "@pipeline().parameters.FileName_input",
 							"type": "Expression"
+						},
+						"FileName_output": {
+							"value": "@variables('FileName_output')",
+							"type": "Expression"
 						}
 					}
 				}
@@ -29,7 +40,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Set FileName_output",
+						"activity": "Execute prepare_CovidFile",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -54,14 +65,7 @@
 				"name": "Set FileName_output",
 				"description": "Set FileName_output variable based on FileName_input parameter",
 				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Execute prepare_CovidFile",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "FileName_output",
