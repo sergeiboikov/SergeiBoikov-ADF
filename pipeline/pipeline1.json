@@ -10,7 +10,7 @@
 				"typeProperties": {
 					"variableName": "FileName_input",
 					"value": {
-						"value": "@substring('CoordStatusMA_Short.csv', 0, 11)",
+						"value": "@substring('CoordStatusMA_Short.csv', 0, lastindexof('CoordStatusMA_Short.csv', '.csv'))",
 						"type": "Expression"
 					}
 				}
