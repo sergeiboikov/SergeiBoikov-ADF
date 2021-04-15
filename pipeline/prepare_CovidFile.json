@@ -46,12 +46,6 @@
 				"defaultValue": "CoordStatusMA_Short.csv"
 			}
 		},
-		"variables": {
-			"fileName_prepared": {
-				"type": "String",
-				"defaultValue": "CoordStatusMA_Short_prepared.csv"
-			}
-		},
 		"annotations": []
 	}
 }

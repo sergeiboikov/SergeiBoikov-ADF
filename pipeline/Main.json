@@ -14,13 +14,7 @@
 						"referenceName": "prepare_CovidFile",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"fileName": {
-							"value": "@pipeline().parameters.FileName_input",
-							"type": "Expression"
-						}
-					}
+					"waitOnCompletion": true
 				}
 			},
 			{
