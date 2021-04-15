@@ -29,7 +29,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Execute prepare_CovidFile",
+						"activity": "Set FileName_output",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -49,12 +49,38 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "Set FileName_output",
+				"description": "Set FileName_output variable based on FileName_input parameter",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Execute prepare_CovidFile",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FileName_output",
+					"value": {
+						"value": "@concat(substring(pipeline().parameters.FileName_input, 0, lastindexof(pipeline().parameters.FileName_input, '.csv')), \n'_',formatDateTime(utcnow(), 'yyyy_MM_dd'), '_prepared.csv')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
 			"FileName_input": {
 				"type": "string",
 				"defaultValue": "CoordStatusMA_Short.csv"
+			}
+		},
+		"variables": {
+			"FileName_output": {
+				"type": "String"
 			}
 		},
 		"annotations": []
