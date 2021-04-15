@@ -10,7 +10,7 @@
 				"typeProperties": {
 					"variableName": "FileName_input",
 					"value": {
-						"value": "@concat(substring('CoordStatusMA_Short.csv', 0, lastindexof('CoordStatusMA_Short.csv', '.csv')), \n'_prepared.csv')",
+						"value": "@concat(substring('CoordStatusMA_Short.csv', 0, lastindexof('CoordStatusMA_Short.csv', '.csv')), \nutcnow(), '_prepared.csv')",
 						"type": "Expression"
 					}
 				}
