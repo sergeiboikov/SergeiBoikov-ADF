@@ -109,7 +109,10 @@
 						"referenceName": "PreparedCovidFile",
 						"type": "DatasetReference",
 						"parameters": {
-							"FileName_prepared": "CoordStatusMA_Short_prepared.csv"
+							"FileName_prepared": {
+								"value": "@pipeline().parameters.FileName_prepared",
+								"type": "Expression"
+							}
 						}
 					}
 				],
