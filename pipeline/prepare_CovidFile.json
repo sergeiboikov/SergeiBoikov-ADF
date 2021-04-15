@@ -15,12 +15,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "fileName",
-						"value": "@pipeline().parameters.fileName"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
 					"baseParameters": {
