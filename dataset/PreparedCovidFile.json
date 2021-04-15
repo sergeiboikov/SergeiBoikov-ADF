@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "Prepared file for staging",
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorage",
+			"referenceName": "AzureDataLakeStorage_LS",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
