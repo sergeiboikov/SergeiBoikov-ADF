@@ -503,7 +503,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"FileName_input": {
+									"value": "@pipeline().parameters.FileName_input",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -527,7 +532,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"FileName_prepared": {
-									"value": "@activity('Execute prepare_CovidFile').output",
+									"value": "@activity('Execute prepare_CovidFile').output.runOutput",
 									"type": "Expression"
 								}
 							}
