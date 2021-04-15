@@ -19,10 +19,6 @@
 						"FileName_input": {
 							"value": "@pipeline().parameters.FileName_input",
 							"type": "Expression"
-						},
-						"FileName_output": {
-							"value": "@pipeline().parameters.FileName_output",
-							"type": "Expression"
 						}
 					}
 				}
@@ -59,10 +55,6 @@
 			"FileName_input": {
 				"type": "string",
 				"defaultValue": "CoordStatusMA_Short.csv"
-			},
-			"FileName_output": {
-				"type": "string",
-				"defaultValue": "CoordStatusMA_Short_prepared.csv"
 			}
 		},
 		"annotations": []
