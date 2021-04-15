@@ -44,7 +44,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"FileName_prepared": {
-							"value": "@activity('Execute prepare_CovidFile').output",
+							"value": "@activity('Execute prepare_CovidFile').output.runOutput",
 							"type": "Expression"
 						}
 					}
