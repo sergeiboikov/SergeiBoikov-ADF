@@ -29,7 +29,7 @@
 					"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
 					"baseParameters": {
 						"FileName_input": {
-							"value": "@pipeline().parameters.fileName",
+							"value": "@pipeline().parameters.FileName_input",
 							"type": "Expression"
 						}
 					}
@@ -42,9 +42,6 @@
 		],
 		"parameters": {
 			"FileName_input": {
-				"type": "string"
-			},
-			"FileName_output": {
 				"type": "string"
 			}
 		},
