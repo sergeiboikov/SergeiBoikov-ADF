@@ -19,12 +19,16 @@
 					{
 						"name": "fileName",
 						"value": "@pipeline().parameters.fileName"
+					},
+					{
+						"name": "FileName_output",
+						"value": "@pipeline().parameters.FileName_output"
 					}
 				],
 				"typeProperties": {
 					"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
 					"baseParameters": {
-						"fileName": {
+						"FileName_input": {
 							"value": "@pipeline().parameters.fileName",
 							"type": "Expression"
 						}
