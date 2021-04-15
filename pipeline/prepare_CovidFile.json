@@ -29,11 +29,36 @@
 					"referenceName": "AzureDatabricks_LS",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "prepare_covid_file_task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "123",
+					"value": {
+						"value": "@activity('prepare_covid_file_task').output",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
 			"FileName_input": {
 				"type": "string"
+			}
+		},
+		"variables": {
+			"123": {
+				"type": "String"
 			}
 		},
 		"annotations": []
