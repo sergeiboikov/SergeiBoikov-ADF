@@ -1,6 +1,7 @@
 {
-	"name": "staging_Load_Covid_untyped",
+	"name": "Load_staging_Covid_untyped",
 	"properties": {
+		"description": "Load data from prepared file into Azure SQL",
 		"activities": [
 			{
 				"name": "copy_prepared_file_staging_untyped",
