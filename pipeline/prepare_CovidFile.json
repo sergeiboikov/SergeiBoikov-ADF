@@ -42,8 +42,10 @@
 		],
 		"parameters": {
 			"FileName_input": {
-				"type": "string",
-				"defaultValue": "CoordStatusMA_Short.csv"
+				"type": "string"
+			},
+			"FileName_output": {
+				"type": "string"
 			}
 		},
 		"annotations": []
