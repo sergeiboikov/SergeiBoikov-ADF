@@ -21,7 +21,7 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
+							"recursive": false,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -41,6 +41,7 @@
 							{
 								"source": {
 									"name": "Status",
+									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -51,17 +52,20 @@
 							},
 							{
 								"source": {
-									"name": "Date",
+									"name": " Date",
+									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Date",
+									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Latitude",
+									"name": " Latitude",
+									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -72,7 +76,8 @@
 							},
 							{
 								"source": {
-									"name": "Longitude",
+									"name": " Longitude",
+									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -83,7 +88,8 @@
 							},
 							{
 								"source": {
-									"name": "Count",
+									"name": " Count",
+									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
