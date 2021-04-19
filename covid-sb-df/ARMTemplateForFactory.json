@@ -47,6 +47,149 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Load_staging_Covid_untyped')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Load data from prepared file into Azure SQL",
+				"activities": [
+					{
+						"name": "copy_prepared_file_staging_untyped",
+						"description": "Copy prepared CovidFile from DataLake into staging ",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE staging.Covid_untyped",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"dataIntegrationUnits": 2,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Status",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Status",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": " Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": " Latitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Latitude",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": " Longitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Longitude",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": " Count",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Count",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PreparedCovidFile",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName_prepared": {
+										"value": "@pipeline().parameters.FileName_prepared",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "staging_Covid_untyped",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"FileName_prepared": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PreparedCovidFile')]",
+				"[concat(variables('factoryId'), '/datasets/staging_Covid_untyped')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Main')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -145,16 +288,16 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Load_staging_Covid_untyped')]",
+			"name": "[concat(parameters('factoryName'), '/Prepare_CovidFile')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Load data from prepared file into Azure SQL",
+				"description": "Prepare Covid file for staging",
 				"activities": [
 					{
-						"name": "copy_prepared_file_staging_untyped",
-						"description": "Copy prepared CovidFile from DataLake into staging ",
-						"type": "Copy",
+						"name": "prepare_covid_file_task",
+						"description": "Notebook activity for preparation covid file for staging",
+						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -165,126 +308,36 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
+							"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
+							"baseParameters": {
+								"FileName_input": {
+									"value": "@pipeline().parameters.FileName_input",
+									"type": "Expression"
 								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE staging.Covid_untyped",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"dataIntegrationUnits": 2,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Status",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Status",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Latitude",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Latitude",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Longitude",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Longitude",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Count",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Count",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+								"FileName_output": {
+									"value": "@pipeline().parameters.FileName_output",
+									"type": "Expression"
 								}
 							}
 						},
-						"inputs": [
-							{
-								"referenceName": "PreparedCovidFile",
-								"type": "DatasetReference",
-								"parameters": {
-									"FileName_prepared": {
-										"value": "@pipeline().parameters.FileName_prepared",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "staging_Covid_untyped",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_LS",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"parameters": {
-					"FileName_prepared": {
+					"FileName_input": {
+						"type": "string"
+					},
+					"FileName_output": {
 						"type": "string"
 					}
 				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/PreparedCovidFile')]",
-				"[concat(variables('factoryId'), '/datasets/staging_Covid_untyped')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_LS')]"
 			]
 		},
 		{
@@ -325,19 +378,19 @@
 						"type": "String"
 					},
 					{
-						"name": "Date",
+						"name": " Date",
 						"type": "String"
 					},
 					{
-						"name": "Latitude",
+						"name": " Latitude",
 						"type": "String"
 					},
 					{
-						"name": "Longitude",
+						"name": " Longitude",
 						"type": "String"
 					},
 					{
-						"name": "Count",
+						"name": " Count",
 						"type": "String"
 					}
 				]
@@ -537,59 +590,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Prepare_CovidFile')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Prepare Covid file for staging",
-				"activities": [
-					{
-						"name": "prepare_covid_file_task",
-						"description": "Notebook activity for preparation covid file for staging",
-						"type": "DatabricksNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/sergei_boikov@epam.com/CovidProjectNotebooks/TransformCovidFileDL",
-							"baseParameters": {
-								"FileName_input": {
-									"value": "@pipeline().parameters.FileName_input",
-									"type": "Expression"
-								},
-								"FileName_output": {
-									"value": "@pipeline().parameters.FileName_output",
-									"type": "Expression"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricks_LS",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"parameters": {
-					"FileName_input": {
-						"type": "string"
-					},
-					"FileName_output": {
-						"type": "string"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_LS')]"
-			]
 		}
 	]
 }
