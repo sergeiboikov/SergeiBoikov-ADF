@@ -34,19 +34,19 @@
 				"type": "String"
 			},
 			{
-				"name": "Date",
+				"name": " Date",
 				"type": "String"
 			},
 			{
-				"name": "Latitude",
+				"name": " Latitude",
 				"type": "String"
 			},
 			{
-				"name": "Longitude",
+				"name": " Longitude",
 				"type": "String"
 			},
 			{
-				"name": "Count",
+				"name": " Count",
 				"type": "String"
 			}
 		]
