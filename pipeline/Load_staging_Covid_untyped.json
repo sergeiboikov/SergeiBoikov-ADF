@@ -51,6 +51,16 @@
 							},
 							{
 								"source": {
+									"name": "Date",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Date",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
 									"name": "Latitude",
 									"physicalType": "String"
 								},
