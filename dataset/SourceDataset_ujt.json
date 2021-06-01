@@ -1,0 +1,65 @@
+{
+	"name": "SourceDataset_ujt",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "olympics.csv",
+				"folderPath": "input",
+				"fileSystem": "covidsbcontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "City",
+				"type": "String"
+			},
+			{
+				"name": "Edition",
+				"type": "String"
+			},
+			{
+				"name": "Sport",
+				"type": "String"
+			},
+			{
+				"name": "Discipline",
+				"type": "String"
+			},
+			{
+				"name": "Athlete",
+				"type": "String"
+			},
+			{
+				"name": "NOC",
+				"type": "String"
+			},
+			{
+				"name": "Gender",
+				"type": "String"
+			},
+			{
+				"name": "Event",
+				"type": "String"
+			},
+			{
+				"name": "Event_gender",
+				"type": "String"
+			},
+			{
+				"name": "Medal",
+				"type": "String"
+			}
+		]
+	}
+}
